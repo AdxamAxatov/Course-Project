@@ -1,0 +1,4 @@
+name;weight;price;number;os;cpu;batteryCapacity
+HP ProBook;2.5;1500;3;WIN11;Intel i7;400
+Dell XPS;2.0;1800;2;WIN10;Intel i5;350
+Lenovo ThinkPad;2.3;1600;1;LINUX;AMD Ryzen 5;380
