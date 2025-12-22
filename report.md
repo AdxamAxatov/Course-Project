@@ -1,43 +1,38 @@
-# Project Progress Report: Warehouse Management System
+# Course Project Report - Warehouse Management System
 
-## 1. Project Overview
-This project implements a multi-tier (n-tier) Warehouse Management System for household appliances (Laptops and Ovens). The application allows users to search for appliances by category, find items within specific price ranges, and calculate total inventory costs.
+## Project Overview
+This project is a Warehouse Management System for household appliances (Laptops and Ovens). I built it to allow users to filter inventory by category, search within price ranges, and calculate the total value of all stock in the warehouse.
 
-## 2. Completed Architecture Layers
+## Architecture & Layers
 
-### 🟢 Startup Layer (Initialization)
-- Implemented `PropertiesConfigImpl` which reads `app.properties`.
-- Used **Factory Pattern** to initialize and inject dependencies across all layers.
-- Handled command-line arguments to support different configuration profiles.
+### 1. Startup Layer (Initialization)
+I implemented the startup process to be flexible. Using `PropertiesConfigImpl`, the app loads settings from an `app.properties` file. I used the **Factory Pattern** to handle dependencies, which keeps the initialization clean and organized.
 
-### 🟢 View Layer
-- Implemented `ConsoleViewImpl` to handle user interaction via the CLI.
-- Designed a robust loop that stays active until the `exit` command is received.
-- Included error notification (`crash()` method) for system failures.
+### 2. View Layer
+The user interface is a CLI implemented in `ConsoleViewImpl`. It uses a loop that stays active until the user types the `exit` command. I also added a `crash()` method to handle errors so the app doesn't just close without an explanation.
 
-### 🟢 Controller Layer
-- Implemented the **Command Pattern**.
-- Created a `CommandProvider` to map user strings to specific executable logic (`FindCommand`, `CostCommand`, `ExitCommand`).
-- Successfully decoupled user input from business logic using `Request` and `Response` DTOs.
+### 3. Controller Layer
+I used the **Command Pattern** for the controller. The `CommandProvider` translates user input into specific logic like `FindCommand` or `CostCommand`. I used `Request` and `Response` DTOs to make sure the View and the Service layers are decoupled.
 
-### 🟢 Service Layer
-- Implemented `ApplianceServiceImpl` to handle business rules.
-- Added logic for inventory value calculation and price-range filtering.
-- Used a `ServiceFactory` to ensure the controller remains independent of the implementation.
+### 4. Service Layer
+The `ApplianceServiceImpl` handles the business rules, like calculating inventory value and filtering prices. I used a `ServiceFactory` to make sure the Controller doesn't depend on a specific implementation.
 
-### 🟢 DAL & Data Source Layer
-- Implemented a **Generic DAO** (`ApplianceDaoImpl<T>`) to support multiple appliance types without code duplication.
-- Created specific CSV source implementations (`LaptopCsvSourceImpl`, `OvenCsvSourceImpl`) for file-based persistence.
+### 5. DAL & Data Source Layer
+To avoid writing the same code twice, I implemented a **Generic DAO** (`ApplianceDaoImpl<T>`). For data storage, I used CSV files with specific implementations for Laptops and Ovens.
 
-## 3. Unit Testing
-- Created unit tests for **Entities**, **DAO Factory**, and **CSV Data Sources**.
-- Verified data integrity using test-specific CSV files (`laptops1-test.csv`) to ensure the production data remains clean.
 
-## 4. Challenges & Solutions
-- **Challenge:** Avoided "copy-paste" code in the Startup layer.
-- **Solution:** Refactored the configuration logic to use a more dynamic initialization approach.
-- **Challenge:** Handling invalid user input without crashing.
-- **Solution:** Implemented a `WrongCommand` and try-catch blocks in the controller to return meaningful error messages.
 
-## 5. Conclusion
-The project meets all mandatory requirements for layered architecture, low coupling, and the use of design patterns. The application is stable, tested, and configurable via external property files.
+## Unit Testing
+I developed unit tests for the following:
+* **Entities**: Checking data integrity.
+* **DAO Factory**: Testing object creation.
+* **CSV Sources**: Testing file reading logic.
+* I used a test-specific file (`laptops1-test.csv`) to keep production data clean. 
+* *Note:* The tests are in the `src/test` folder. Running them via terminal requires JUnit libraries in the classpath, but the logic is fully implemented.
+
+## Challenges & Solutions
+* **Avoiding Copy-Paste:** I refactored the startup logic to be dynamic instead of just copying code for each setting.
+* **Input Validation:** To prevent crashes from invalid user input, I added a `WrongCommand` handler and `try-catch` blocks in the controller to provide meaningful error messages.
+
+## Conclusion
+The project follows the required layered architecture and uses design patterns to keep coupling low. The system is stable, easy to configure via properties, and meets all the course requirements.
