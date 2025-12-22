@@ -5,7 +5,7 @@ This project is a Warehouse Management System for household appliances (Laptops 
 
 ## Architecture & Layers
 
-### 1. Startup Layer (Initialization)
+### 1. Startup Layer
 I implemented the startup process to be flexible. Using `PropertiesConfigImpl`, the app loads settings from an `app.properties` file. I used the **Factory Pattern** to handle dependencies, which keeps the initialization clean and organized.
 
 ### 2. View Layer
