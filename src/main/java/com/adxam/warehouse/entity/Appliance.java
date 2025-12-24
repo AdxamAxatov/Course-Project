@@ -1,6 +1,5 @@
 package com.adxam.warehouse.entity;
 
-import java.util.Objects;
 
 public abstract class Appliance<SELF extends Appliance<SELF>> {
     private String name;
