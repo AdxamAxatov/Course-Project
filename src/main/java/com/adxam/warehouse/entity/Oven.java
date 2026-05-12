@@ -15,11 +15,7 @@ public class Oven extends Appliance<Oven> implements PowerConsumable {
 
     @Override
     public String toString() {
-        return super.toString().replace("}", "") + 
+        return super.toString().replace("}", "") +
                String.format(", power=%d, capacity=%.1f}", powerConsumption, capacity);
-    }
-    public Object getNumber() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNumber'");
     }
 }

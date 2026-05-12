@@ -8,4 +8,9 @@ public interface ApplianceService {
     List<Oven> findOvens() throws ServiceException;
     Appliance<?> findCheapest() throws ServiceException;
     List<Appliance<?>> findByPrice(Range<Long> range) throws ServiceException;
+
+    Laptop addLaptop(Laptop laptop) throws ServiceException;
+    Oven addOven(Oven oven) throws ServiceException;
+    boolean removeLaptop(long id) throws ServiceException;
+    boolean removeOven(long id) throws ServiceException;
 }

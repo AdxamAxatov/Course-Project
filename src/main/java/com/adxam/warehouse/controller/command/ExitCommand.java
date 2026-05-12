@@ -1,8 +1,18 @@
 package com.adxam.warehouse.controller.command;
-import com.adxam.warehouse.controller.*;
+
+import com.adxam.warehouse.controller.Request;
+import com.adxam.warehouse.controller.Response;
+import com.adxam.warehouse.controller.ResponseImpl;
+
 public class ExitCommand implements Command {
+
     @Override
-    public Response execute(String[] args) {
-        return new ResponseImpl("Great job!", true, true);
+    public boolean requiresAuth() {
+        return false;
+    }
+
+    @Override
+    public Response execute(Request request) {
+        return new ResponseImpl("Goodbye!", true, true);
     }
 }

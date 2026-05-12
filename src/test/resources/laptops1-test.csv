@@ -1,0 +1,3 @@
+name;weight;price;number;os;cpu;batteryCapacity
+TestBook;1.5;1000;5;LINUX;AMD;420
+SampleTop;2.1;1700;2;WIN11;Intel;380
