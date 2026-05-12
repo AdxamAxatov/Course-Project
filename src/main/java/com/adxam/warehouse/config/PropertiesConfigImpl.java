@@ -66,6 +66,14 @@ public class PropertiesConfigImpl implements Config {
     public Database database() { return database; }
     public int serverPort() { return serverPort; }
 
+    private static String resolve(Properties props, String propKey, String envKey, String defaultVal) {
+        String fromProps = props.getProperty(propKey);
+        if (fromProps != null && !fromProps.isBlank()) return fromProps;
+        String fromEnv = System.getenv(envKey);
+        if (fromEnv != null && !fromEnv.isBlank()) return fromEnv;
+        return defaultVal;
+    }
+
     private Properties loadProps() {
         Properties props = new Properties();
         try (InputStream is = Thread.currentThread().getContextClassLoader()
@@ -79,9 +87,9 @@ public class PropertiesConfigImpl implements Config {
     }
 
     private void initJdbc(Properties props) {
-        String url = props.getProperty("db.url", "jdbc:postgresql://localhost:5432/warehouse");
-        String user = props.getProperty("db.user", "postgres");
-        String password = props.getProperty("db.password", "postgres");
+        String url = resolve(props, "db.url", "WAREHOUSE_DB_URL", "jdbc:postgresql://localhost:5432/warehouse");
+        String user = resolve(props, "db.user", "WAREHOUSE_DB_USER", "postgres");
+        String password = resolve(props, "db.password", "WAREHOUSE_DB_PASSWORD", "");
         int poolSize = Integer.parseInt(props.getProperty("db.poolSize", "5"));
 
         try {
