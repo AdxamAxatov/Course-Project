@@ -39,10 +39,20 @@ class ControllerEndToEndIT {
 
     @BeforeAll
     static void bootstrap() throws SQLException {
-        String url = "jdbc:h2:mem:e2e-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1";
-        ConnectionPool pool = new ConnectionPool(url, "sa", "", 3);
+        com.adxam.warehouse.dal.db.TestDatabaseConfig.ensureDatabaseExists();
+        ConnectionPool pool = new ConnectionPool(
+                com.adxam.warehouse.dal.db.TestDatabaseConfig.URL,
+                com.adxam.warehouse.dal.db.TestDatabaseConfig.USER,
+                com.adxam.warehouse.dal.db.TestDatabaseConfig.PASSWORD,
+                3);
         Database db = new Database(pool);
-        new SchemaInitializer(pool, "admin", "admin").run();
+        SchemaInitializer schema = new SchemaInitializer(pool, "admin", "admin");
+        schema.createSchema();
+        try (java.sql.Connection c = pool.borrow();
+             java.sql.Statement s = c.createStatement()) {
+            s.execute("TRUNCATE TABLE users, laptops, ovens RESTART IDENTITY");
+        }
+        schema.run();
 
         JdbcUserDao userDao = new JdbcUserDao(db);
         UserDaoFactory.init(userDao);

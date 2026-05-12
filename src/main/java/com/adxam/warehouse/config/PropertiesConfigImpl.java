@@ -27,8 +27,6 @@ import com.adxam.warehouse.util.Logging;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,11 +79,10 @@ public class PropertiesConfigImpl implements Config {
     }
 
     private void initJdbc(Properties props) {
-        String url = props.getProperty("db.url", "jdbc:h2:./data/warehouse;AUTO_SERVER=TRUE");
-        String user = props.getProperty("db.user", "sa");
-        String password = props.getProperty("db.password", "");
+        String url = props.getProperty("db.url", "jdbc:postgresql://localhost:5432/warehouse");
+        String user = props.getProperty("db.user", "postgres");
+        String password = props.getProperty("db.password", "postgres");
         int poolSize = Integer.parseInt(props.getProperty("db.poolSize", "5"));
-        ensureParentDir(url);
 
         try {
             ConnectionPool pool = new ConnectionPool(url, user, password, poolSize);
@@ -119,16 +116,4 @@ public class PropertiesConfigImpl implements Config {
         LOG.warning("CSV storage is read-only; add/remove/users commands will fail. Use storage=jdbc for full functionality.");
     }
 
-    private void ensureParentDir(String jdbcUrl) {
-        if (!jdbcUrl.startsWith("jdbc:h2:") || jdbcUrl.contains(":mem:")) return;
-        String filePart = jdbcUrl.substring("jdbc:h2:".length());
-        int sep = filePart.indexOf(';');
-        if (sep > 0) filePart = filePart.substring(0, sep);
-        Path p = Path.of(filePart).toAbsolutePath();
-        Path dir = p.getParent();
-        if (dir != null) {
-            try { Files.createDirectories(dir); }
-            catch (IOException e) { throw new RuntimeException("Cannot create DB directory: " + dir, e); }
-        }
-    }
 }

@@ -1,13 +1,6 @@
 # Maven
 target/
 
-# H2 data files (created at runtime)
-data/
-*.db
-*.mv.db
-*.trace.db
-*.lock.db
-
 # Logs
 *.log
 

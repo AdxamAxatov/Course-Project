@@ -12,14 +12,14 @@
     <maven.compiler.release>17</maven.compiler.release>
     <junit.version>5.9.2</junit.version>
     <mockito.version>5.11.0</mockito.version>
-    <h2.version>2.2.224</h2.version>
+    <postgresql.version>42.7.4</postgresql.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>${h2.version}</version>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
 
     <dependency>

@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,8 +23,9 @@ class JdbcLaptopDaoIT {
 
     @BeforeAll
     static void setUp() throws SQLException {
-        String url = "jdbc:h2:mem:laptopdao-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1";
-        pool = new ConnectionPool(url, "sa", "", 2);
+        TestDatabaseConfig.ensureDatabaseExists();
+        pool = new ConnectionPool(TestDatabaseConfig.URL,
+                TestDatabaseConfig.USER, TestDatabaseConfig.PASSWORD, 2);
         db = new Database(pool);
         new SchemaInitializer(pool, "x", "x").createSchema();
         dao = new JdbcLaptopDao(db);
@@ -40,7 +40,6 @@ class JdbcLaptopDaoIT {
     void truncate() throws SQLException {
         try (Connection c = pool.borrow(); Statement s = c.createStatement()) {
             s.execute("DELETE FROM laptops");
-            s.execute("ALTER TABLE laptops ALTER COLUMN id RESTART WITH 1");
         }
     }
 

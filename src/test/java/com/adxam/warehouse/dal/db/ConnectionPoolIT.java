@@ -1,19 +1,24 @@
 package com.adxam.warehouse.dal.db;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ConnectionPoolTest {
+class ConnectionPoolIT {
+
+    @BeforeAll
+    static void setUp() throws SQLException {
+        TestDatabaseConfig.ensureDatabaseExists();
+    }
 
     @Test
     void borrowedConnectionIsReusedAfterClose() throws SQLException {
-        String url = "jdbc:h2:mem:pool-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1";
-        try (ConnectionPool pool = new ConnectionPool(url, "sa", "", 1)) {
+        try (ConnectionPool pool = new ConnectionPool(
+                TestDatabaseConfig.URL, TestDatabaseConfig.USER, TestDatabaseConfig.PASSWORD, 1)) {
             Connection first = pool.borrow();
             assertTrue(first.isValid(1));
             first.close();
@@ -25,8 +30,8 @@ class ConnectionPoolTest {
 
     @Test
     void poolEnforcesCapacityWithTimeout() throws SQLException {
-        String url = "jdbc:h2:mem:pool2-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1";
-        try (ConnectionPool pool = new ConnectionPool(url, "sa", "", 1)) {
+        try (ConnectionPool pool = new ConnectionPool(
+                TestDatabaseConfig.URL, TestDatabaseConfig.USER, TestDatabaseConfig.PASSWORD, 1)) {
             Connection only = pool.borrow();
             assertNotNull(only);
             Thread bg = new Thread(() -> {
@@ -47,6 +52,7 @@ class ConnectionPoolTest {
     @Test
     void rejectsInvalidCapacity() {
         assertThrows(IllegalArgumentException.class,
-                () -> new ConnectionPool("jdbc:h2:mem:x", "sa", "", 0));
+                () -> new ConnectionPool(TestDatabaseConfig.URL,
+                        TestDatabaseConfig.USER, TestDatabaseConfig.PASSWORD, 0));
     }
 }
