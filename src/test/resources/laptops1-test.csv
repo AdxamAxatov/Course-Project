@@ -1,0 +1,4 @@
+name;weight;price;number;os;cpu;batteryCapacity
+TestBook Basic;1.8;900;4;WIN11;Intel i3;300
+TestBook Pro;2.1;1300;2;WIN10;Intel i5;360
+TestBook Linux;1.9;1100;1;LINUX;AMD Ryzen 5;390

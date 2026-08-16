@@ -30,7 +30,7 @@ public class ConsoleViewImpl implements View {
                 line = line.trim();
 
                 if (line.isEmpty()) {
-                    System.out.println("Type 'help' to see available commands.");
+                    System.out.println("Available commands are listed above.");
                     continue;
                 }
 
@@ -63,11 +63,13 @@ public class ConsoleViewImpl implements View {
 
     public static void printMenu() {
         System.out.println("Available commands:");
-        System.out.println("  help");
-        System.out.println("  find laptops [key=value ...]");
-        System.out.println("  find ovens [key=value ...]");
-        System.out.println("  find all [key=value ...]");
-        System.out.println("  cost laptops [key=value ...]");
+        System.out.println("  find laptops");
+        System.out.println("  find ovens");
+        System.out.println("  find all");
+        System.out.println("  find all price=min;max");
+        System.out.println("  cost laptops");
+        System.out.println("  cost ovens");
+        System.out.println("  cost all");
         System.out.println("  exit");
     }
 

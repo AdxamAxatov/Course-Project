@@ -25,7 +25,9 @@ public class ApplianceDaoImpl<A extends Appliance<?>> implements ApplianceDao<A>
                     list.add(appliance);
             }
         } catch (IOException e) {
-            throw new DaoException(e);
+            throw new DaoException("Could not read source: " + source.csvName(), e);
+        } catch (RuntimeException e) {
+            throw new DaoException("Could not parse source: " + source.csvName(), e);
         }
         return list;    
     }

@@ -1,0 +1,4 @@
+name;weight;price;number;powerConsumption;capacity
+Compact Test Oven;16.0;500;2;1800;28.0
+Family Test Oven;19.0;750;1;2000;34.0
+Large Test Oven;23.0;950;3;2300;40.0
