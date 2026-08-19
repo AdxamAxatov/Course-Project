@@ -14,8 +14,7 @@ public class Oven extends Appliance<Oven> implements PowerConsumable {
     public double getCapacity() { return capacity; }
 
     @Override
-    public String toString() {
-        return super.toString().replace("}", "") + 
-               String.format(", power=%d, capacity=%.1f}", powerConsumption, capacity);
+    public String details() {
+        return String.format("power=%d, capacity=%.1f", powerConsumption, capacity);
     }
 }

@@ -22,6 +22,7 @@ class CsvSourceTest {
             assertTrue(source.hasNext());
             Laptop laptop = source.next();
 
+            assertEquals("L-101", laptop.getId());
             assertEquals("TestBook Basic", laptop.getName());
             assertEquals(1.8, laptop.getWeight());
             assertEquals(900, laptop.getPrice());
@@ -40,6 +41,7 @@ class CsvSourceTest {
             assertTrue(source.hasNext());
             Oven oven = source.next();
 
+            assertEquals("O-101", oven.getId());
             assertEquals("Compact Test Oven", oven.getName());
             assertEquals(16.0, oven.getWeight());
             assertEquals(500, oven.getPrice());

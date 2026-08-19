@@ -4,7 +4,8 @@ public class CommandProvider {
     private static final Map<String, Command> REPOSITORY = Map.of(
         "find", new FindCommand(),
         "cost", new CostCommand(),
-        "exit", new ExitCommand()
+        "exit", new ExitCommand(),
+        "help", new HelpCommand()
     );
     public static Command getCommand(String name) {
         return REPOSITORY.getOrDefault(name.toLowerCase(), new WrongCommand());

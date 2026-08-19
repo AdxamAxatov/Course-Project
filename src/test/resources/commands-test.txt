@@ -1,0 +1,6 @@
+# Batch script used by BatchViewTest
+
+help
+cost all
+exit
+cost laptops

@@ -1,4 +1,4 @@
-name;weight;price;number;powerConsumption;capacity
-Compact Test Oven;16.0;500;2;1800;28.0
-Family Test Oven;19.0;750;1;2000;34.0
-Large Test Oven;23.0;950;3;2300;40.0
+id;name;weight;price;number;powerConsumption;capacity
+O-101;Compact Test Oven;16.0;500;2;1800;28.0
+O-102;Family Test Oven;19.0;750;1;2000;34.0
+O-103;Large Test Oven;23.0;950;3;2300;40.0

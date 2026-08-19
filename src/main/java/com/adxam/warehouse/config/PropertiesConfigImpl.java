@@ -42,11 +42,20 @@ public class PropertiesConfigImpl implements Config {
 
     private void initView(Properties props) {
         String mode = props.getProperty("view");
-        View view = switch (mode) {
+        View view = switch (mode == null ? "" : mode) {
             case "console" -> new ConsoleViewImpl();
+            case "batch" -> new BatchViewImpl(batchScript(props));
             default -> throw new IllegalStateException("Unknown view: " + mode);
         };
         ViewFactory.init(view);
+    }
+
+    private String batchScript(Properties props) {
+        String script = props.getProperty("batch.source");
+        if (script == null) {
+            throw new IllegalStateException("Missing 'batch.source' property for the batch view");
+        }
+        return script + ".txt";
     }
 
     private void initController(Properties props) {

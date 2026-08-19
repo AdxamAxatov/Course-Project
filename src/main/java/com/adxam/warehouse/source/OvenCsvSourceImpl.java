@@ -9,12 +9,13 @@ public class OvenCsvSourceImpl extends AbstractCsvSource<Oven> {
     public Oven next() {
         String[] data = getLine().split(";");
         return new Oven()
-                .setName(data[0].trim())
-                .setWeight(Double.parseDouble(data[1].trim()))
-                .setPrice(Long.parseLong(data[2].trim()))
-                .setQuantity(Integer.parseInt(data[3].trim()))
-                .setPowerConsumption(Integer.parseInt(data[4].trim()))
-                .setCapacity(Double.parseDouble(data[5].trim()));
+                .setId(data[0].trim())
+                .setName(data[1].trim())
+                .setWeight(Double.parseDouble(data[2].trim()))
+                .setPrice(Long.parseLong(data[3].trim()))
+                .setQuantity(Integer.parseInt(data[4].trim()))
+                .setPowerConsumption(Integer.parseInt(data[5].trim()))
+                .setCapacity(Double.parseDouble(data[6].trim()));
     }
 
     @Override

@@ -41,8 +41,8 @@ public class ManualTestRunner {
 
     private static void initFactoriesForTestData() {
         DaoFactory.init(Map.of(
-                Laptop.class, new ApplianceDaoImpl<>(new LaptopCsvSourceImpl("laptops.csv")),
-                Oven.class, new ApplianceDaoImpl<>(new OvenCsvSourceImpl("ovens.csv"))));
+                Laptop.class, new ApplianceDaoImpl<>(new LaptopCsvSourceImpl("laptops1-test.csv")),
+                Oven.class, new ApplianceDaoImpl<>(new OvenCsvSourceImpl("ovens1-test.csv"))));
 
         ServiceFactory.init(new ApplianceServiceImpl());
     }

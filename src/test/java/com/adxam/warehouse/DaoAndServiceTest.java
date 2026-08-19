@@ -19,20 +19,19 @@ import com.adxam.warehouse.source.OvenCsvSourceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DaoAndServiceTest {
 
     @BeforeAll
     static void configureFactories() {
-        DaoFactory.init(Map.of(
-                Laptop.class, new ApplianceDaoImpl<>(new LaptopCsvSourceImpl("laptops1-test.csv")),
-                Oven.class, new ApplianceDaoImpl<>(new OvenCsvSourceImpl("ovens1-test.csv"))));
-        ServiceFactory.init(new ApplianceServiceImpl());
+        TestFactories.initWithTestResources();
     }
 
     @Test
@@ -62,6 +61,29 @@ class DaoAndServiceTest {
         List<Appliance<?>> result = service.findByPrice(new Range<>(900L, 1100L));
 
         assertEquals(3, result.size());
+    }
+
+    @Test
+    void daoWrapsSourceFailureAndKeepsTheOriginalCause() {
+        ApplianceDao<Laptop> dao = new ApplianceDaoImpl<>(new LaptopCsvSourceImpl("missing.csv"));
+
+        DaoException thrown = assertThrows(DaoException.class,
+                () -> dao.find(new LaptopSearchCriteria().add(Parameter.any())));
+
+        assertNotNull(thrown.getCause(), "cause must be preserved, not swallowed");
+        assertInstanceOf(IOException.class, thrown.getCause());
+    }
+
+    @Test
+    void serviceCalculatesCostPerCategoryAndTotal() throws ServiceException {
+        ApplianceService service = ServiceFactory.getInstance();
+
+        long laptopsCost = service.calculateLaptopsCost();
+        long ovensCost = service.calculateOvensCost();
+
+        assertEquals(7300L, laptopsCost);
+        assertEquals(4600L, ovensCost);
+        assertEquals(laptopsCost + ovensCost, service.calculateTotalCost());
     }
 
     @Test

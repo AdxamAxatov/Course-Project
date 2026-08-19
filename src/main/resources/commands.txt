@@ -1,0 +1,8 @@
+# Sample batch script: run with  java com.adxam.warehouse.app.Main app-batch
+help
+find all sort=price desc
+find laptops cpu=Intel i5
+find ovens power=2000;2300 sort=weight
+find all price=1;2
+cost all
+exit

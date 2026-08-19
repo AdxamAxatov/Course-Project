@@ -25,8 +25,7 @@ public class Laptop extends Appliance<Laptop> {
     }
 
     @Override
-    public String toString() {
-        return super.toString().replace("}", "") +
-               String.format(", os='%s', cpu='%s', battery=%d}", os, cpu, batteryCapacity);
+    public String details() {
+        return String.format("os='%s', cpu='%s', battery=%d", os, cpu, batteryCapacity);
     }
 }
